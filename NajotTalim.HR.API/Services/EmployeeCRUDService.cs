@@ -1,20 +1,22 @@
 ﻿using NajotTalim.HR.API.Models;
-using NajotTalim.HR.DataAcces;
 using NajotTalim.HR.DataAcces.Entities;
 
 namespace NajotTalim.HR.API.Services
 {
     public class EmployeeCRUDService : IGenericCRUDService<EmployeeModel>
     {
-        private readonly IEmployeeRepository _employeeRepository;
+        private readonly IGenericRepository<Employee> _employeeRepository;
+        private readonly IGenericRepository<Adress> _adressRepository;
 
-        public EmployeeCRUDService(IEmployeeRepository employeeRepository)
+        public EmployeeCRUDService(IGenericRepository<Employee> employeeRepository, IGenericRepository<Adress> adressRepository)
         {
             _employeeRepository = employeeRepository;
+            _adressRepository = adressRepository;
         }
 
         public async Task<EmployeeModel> Create(EmployeeModel model)
         {
+            var existingAdress = await _adressRepository.Get(model.AdressId);
             var employee = new Employee
             {
                 FullName = model.FullName,
@@ -22,6 +24,9 @@ namespace NajotTalim.HR.API.Services
                 Email = model.Email,
                 Salary = model.Salary,
             };
+
+            if (existingAdress != null) 
+                employee.Adress = existingAdress;
 
             var createdEmployee = await _employeeRepository.Create(employee);
             var result = new EmployeeModel
@@ -31,6 +36,7 @@ namespace NajotTalim.HR.API.Services
                 Department = createdEmployee.Department,
                 Email = createdEmployee.Email,
                 Salary = createdEmployee.Salary,
+                AdressId = createdEmployee.AdressId,
             };
 
             return result;
