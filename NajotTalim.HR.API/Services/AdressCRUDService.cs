@@ -6,9 +6,9 @@ namespace NajotTalim.HR.API.Services
 {
     public class AdressCRUDService : IGenericCRUDService<AdressModel>
     {
-        private readonly IAdressRepository _adressRepository;
+        private readonly IGenericRepository<Adress> _adressRepository;
 
-        public AdressCRUDService(IAdressRepository adressRepository)
+        public AdressCRUDService(IGenericRepository<Adress> adressRepository)
         {
             _adressRepository = adressRepository;
         }
