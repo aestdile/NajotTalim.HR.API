@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using NajotTalim.HR.API.Models;
 using NajotTalim.HR.API.Services;
 
@@ -17,7 +18,8 @@ namespace NajotTalim.HR.API.Controllers
 
         // GET: api/<AdressController>
         [HttpGet]
-        public async Task<IActionResult> Get()
+        [Authorize]
+        public async Task<IActionResult> GetAll()
         {
             return Ok(await _adressSvc.GetAll());
         }
@@ -28,7 +30,7 @@ namespace NajotTalim.HR.API.Controllers
         {
             if (id == 0)
                 return NotFound($"Adress with the given id: {id} is not found.");
-            else if (id < 1)
+            else if (id < 0)
                 return BadRequest("Wrong data.");
 
             return Ok(await _adressSvc.Get(id));
@@ -38,6 +40,9 @@ namespace NajotTalim.HR.API.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] AdressModel adress)
         {
+            if (!ModelState.IsValid)
+                return BadRequest("Wrong Data!");
+
             var createdEmployee = await _adressSvc.Create(adress);
             var routeValues = new { id = createdEmployee.Id };
             return CreatedAtRoute(routeValues, createdEmployee);
