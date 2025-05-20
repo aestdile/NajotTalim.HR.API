@@ -7,16 +7,28 @@ namespace NajotTalim.HR.API.Services
     {
         private readonly IGenericRepository<Employee> _employeeRepository;
         private readonly IGenericRepository<Adress> _adressRepository;
-
-        public EmployeeCRUDService(IGenericRepository<Employee> employeeRepository, IGenericRepository<Adress> adressRepository)
+        private readonly IAccountNumberValidationService _accountNumberValidationService;
+        public EmployeeCRUDService(IGenericRepository<Employee> employeeRepository, 
+            IGenericRepository<Adress> adressRepository,
+            IAccountNumberValidationService accountNumberValidationService)
         {
             _employeeRepository = employeeRepository;
             _adressRepository = adressRepository;
+            _accountNumberValidationService = accountNumberValidationService;
         }
 
         public async Task<EmployeeModel> Create(EmployeeModel model)
         {
-            var existingAdress = await _adressRepository.Get(model.AdressId);
+            if (!string.IsNullOrWhiteSpace(model.AccountNumber) 
+                && !_accountNumberValidationService.IsValid(
+                    model.AccountNumber))
+            {
+                throw new Exception("Invalid account number!");
+            }
+
+            var existingAdress = 
+                await _adressRepository.Get(model.AdressId);
+
             var employee = new Employee
             {
                 FullName = model.FullName,
@@ -28,7 +40,9 @@ namespace NajotTalim.HR.API.Services
             if (existingAdress != null) 
                 employee.Adress = existingAdress;
 
-            var createdEmployee = await _employeeRepository.Create(employee);
+            var createdEmployee = 
+                await _employeeRepository.Create(employee);
+
             var result = new EmployeeModel
             {
                 Id = createdEmployee.Id,
@@ -49,7 +63,9 @@ namespace NajotTalim.HR.API.Services
 
         public async Task<EmployeeModel> Get(int id)
         {
-            var employee = await _employeeRepository.Get(id);
+            var employee = 
+                await _employeeRepository.Get(id);
+
             var model = new EmployeeModel
             {
                 Id = employee.Id,
@@ -65,7 +81,9 @@ namespace NajotTalim.HR.API.Services
         public async Task<IEnumerable<EmployeeModel>> GetAll()
         {
             var result = new List<EmployeeModel>();
-            var employees = await _employeeRepository.GetAll();
+            var employees = 
+                await _employeeRepository.GetAll();
+
             foreach (var employee in employees)
             {
                 var model = new EmployeeModel
@@ -93,7 +111,9 @@ namespace NajotTalim.HR.API.Services
                 Salary = model.Salary,
             };
 
-            var updatedEmployee = await _employeeRepository.Update(id, employee);
+            var updatedEmployee = 
+                await _employeeRepository.Update(id, employee);
+
             var result = new EmployeeModel
             {
                 Id = updatedEmployee.Id,

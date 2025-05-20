@@ -20,6 +20,7 @@ namespace NajotTalim.HR.API.Models
 
         public decimal Salary { get; set; }
         public int AdressId { get; set; }
+        public string AccountNumber { get; set; }
     }
 }
 

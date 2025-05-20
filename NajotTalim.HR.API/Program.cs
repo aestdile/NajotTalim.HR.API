@@ -38,6 +38,7 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddScoped<IGenericCRUDService<EmployeeModel>, EmployeeCRUDService>();
 builder.Services.AddScoped<IGenericCRUDService<AdressModel>, AdressCRUDService>();
+builder.Services.AddScoped<IAccountNumberValidationService, AccountNumberValidationService>();
 builder.Services.AddControllers();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -59,7 +60,7 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.IsProduction())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
