@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NajotTalim.HR.API", "NajotT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NajotTalim.HR.DataAcces", "NajotTalim.HR.DataAcces\NajotTalim.HR.DataAcces.csproj", "{9D5CE1BE-553A-4FA8-860A-0E17C3C1C801}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UltimateUserSystem.API.Tests", "UltimateUserSystem.API.Tests\UltimateUserSystem.API.Tests.csproj", "{43746513-5A39-4C82-A2A1-E2F1A86C9066}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{9D5CE1BE-553A-4FA8-860A-0E17C3C1C801}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9D5CE1BE-553A-4FA8-860A-0E17C3C1C801}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9D5CE1BE-553A-4FA8-860A-0E17C3C1C801}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43746513-5A39-4C82-A2A1-E2F1A86C9066}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43746513-5A39-4C82-A2A1-E2F1A86C9066}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43746513-5A39-4C82-A2A1-E2F1A86C9066}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43746513-5A39-4C82-A2A1-E2F1A86C9066}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
